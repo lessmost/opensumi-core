@@ -17,6 +17,11 @@ module.exports = createWebpackConfig(baseDir, path.join(baseDir, 'app.tsx'), {
       bfsGlobal: require.resolve('browserfs'),
     },
   },
+  // REQUIRED to avoid issue "Uncaught TypeError: BrowserFS.BFSRequire is not a function"
+  // See: https://github.com/jvilk/BrowserFS/issues/201
+  module: {
+    noParse: /browserfs\.js/,
+  },
   node: false,
   plugins: [
     new webpack.DefinePlugin({
